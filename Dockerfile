@@ -19,12 +19,13 @@ RUN chown -R blog.blog /o
 USER blog
 
 # rake is the default command.
-CMD if [ $RUN_DEBUG -gt 0 ]                                         ; \
-      then                                                            \
-        echo [DEBUG]; env | grep "._" >> /etc/environment           ; \
-        env | grep "._" >> /etc/environment                         ; \
-        /usr/bin/supervisord && /bin/bash                           ; \
-      else                                                            \
-        env | grep "._" >> /etc/environment                         ; \
-        /usr/bin/supervisord --nodaemon && rake                     ; \
-    fi
+CMD \
+  if [ $RUN_DEBUG -gt 0 ]                                       ; \
+  then                                                            \
+    echo [DEBUG]; env | grep "._" >> /etc/environment           ; \
+    env | grep "._" >> /etc/environment                         ; \
+    /usr/bin/supervisord && /bin/bash                           ; \
+  else                                                            \
+    env | grep "._" >> /etc/environment                         ; \
+    /usr/bin/supervisord --nodaemon && rake                     ; \
+  fi
